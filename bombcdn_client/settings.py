@@ -155,7 +155,7 @@ BROKER_URL = "redis://localhost:6379/0"
 
 # BOOMCDN SETTINGS
 
-SERVER_URL = "http://localhost:900/"
+SERVER_URL = "http://boomcdn.biz/"
 
 SERVER_UUID = '123'
 
