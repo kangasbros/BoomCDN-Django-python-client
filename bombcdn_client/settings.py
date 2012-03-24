@@ -157,6 +157,8 @@ BROKER_URL = "redis://localhost:6379/0"
 
 SERVER_URL = "http://boomcdn.biz"
 
+SERVER_UUID = '123'
+
 # BROKER_HOST = "localhost"
 # BROKER_PORT = 5672
 # BROKER_USER = "guest"
