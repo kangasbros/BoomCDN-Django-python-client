@@ -11,8 +11,8 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'database.sqlite3',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -65,7 +65,7 @@ STATIC_URL = '/static/'
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
-ADMIN_MEDIA_PREFIX = '/static/admin/'
+# ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -83,7 +83,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '&5z38pk2&=d0632)+z1d(0(ccd)@x%_bmq(qa5mcii#h5l246b'
+SECRET_KEY = '&-&_d(8x1#hhpax@+tp$r2%)7@nah3!b&!i=uud58to+lxfo6p'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -115,6 +115,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djcelery',
+    'files',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -143,3 +145,27 @@ LOGGING = {
         },
     }
 }
+
+# CELERY
+
+import djcelery
+djcelery.setup_loader()
+
+BROKER_URL = "redis://localhost:6379/0"
+
+# BOOMCDN SETTINGS
+
+SERVER_URL = "http://localhost:900/"
+
+# BROKER_HOST = "localhost"
+# BROKER_PORT = 5672
+# BROKER_USER = "guest"
+# BROKER_PASSWORD = "guest"
+# BROKER_VHOST = "/"
+
+# local_settings.py can be used to override environment-specific settings
+# like database and email that differ between development and production.
+try:
+    from local_settings import *
+except ImportError:
+    pass
