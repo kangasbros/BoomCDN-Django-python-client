@@ -3,20 +3,23 @@ import files.models
 from files.tasks import generate_test_file
 from settings import username, profile_uuid, SERVER_URL, clientserver_ip, clientserver_port
 import hashlib
-import json
+import urllib
+import re
+import os
+import random
+from django.utils import simplejson
 
 def call_api(url_suffix, data = None):
-    if DEBUG:
-        print "Calling URL: "+SERVER_URL + url_suffix
-        return None
-    else:
-        f = urllib.urlopen(SERVER_URL + url_suffix, data)
-        data = f.read()
-        print data
-        return json.loads(data)
+    f = urllib.urlopen(SERVER_URL + url_suffix, data)
+    data = f.read()
+    print data, type(data)
+    return simplejson.loads(data)
 
 def initialize_db(sender, **kwargs):
     # Your specific logic here
+    if files.models.get_setting("server_uuid"):
+        print "server uuid already exists!"
+        return
     print "Generating test file..."
     generate_test_file()
     f=files.models.File.objects.get(id=int(files.models.get_setting("test_file")))
@@ -35,7 +38,7 @@ def initialize_db(sender, **kwargs):
         data["test_file_hash"], profile_uuid)
     test_hash = hashlib.sha256(to_hash).hexdigest()
     data['sign_key_profile'] = test_hash
-    results=json.loads(call_api("/CLIENTSERVER/NEW", data))
+    results=call_api("/clientserver/new", urllib.urlencode(data))
     print "new server registered", results
     files.models.set_setting("server_uuid", results["data"])
     print "server uuid", files.models.get_setting("server_uuid")

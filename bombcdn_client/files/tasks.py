@@ -5,20 +5,14 @@ import os
 import random
 from utils import create_file_directories, hashfile, b58encode
 from models import File
-from settings import DEBUG
+from settings import username, profile_uuid, SERVER_URL, clientserver_ip, clientserver_port
 from models import get_setting, set_setting
 
-API_URL="http://localhost:7999"
-
 def call_api(url_suffix, data = None):
-    if DEBUG:
-        print "Calling URL: "+API_URL + url_suffix
-        return None
-    else:
-        f = urllib.urlopen(API_URL + url_suffix, data)
-        data = f.read()
-        print data
-        return json.loads(data)
+    f = urllib.urlopen(SERVER_URL + url_suffix, data)
+    data = f.read()
+    print data
+    return json.loads(data)
 
 @task()
 def file_download(uuid, url, filename, expires_at):
