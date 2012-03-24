@@ -9,7 +9,26 @@ import os
 import hashlib
 from utils import b58encode, b58decode
 from models import File, get_setting, set_setting, create_alias
+import sys, traceback
+from django.views.decorators.csrf import csrf_exempt
 
+def print_traceback(func):
+	def wrap(*args, **kwargs):
+		try:
+			print "kakka"
+			results = func(*args, **kwargs)
+			print results
+			return results
+			print "kakka2"
+		except:
+			print "Exception in user code:"
+	        print '-'*60
+	        traceback.print_exc(file=sys.stdout)
+	        print '-'*60
+	return wrap
+
+@csrf_exempt
+@print_traceback
 def add_file(request):
 	server_uuid=get_setting("server_uuid")
 	if request.method == "POST":
@@ -18,7 +37,9 @@ def add_file(request):
 		url=request.POST["url"]
 		filename=request.POST["filename"]
 		expires_at=request.POST["expires_at"]
+		# to_hash = 'ADD_FILE%s%s%s' % (file_uuid, url, server_uuid)
 		to_hash = '%s%s%s%s' % ("ADD_FILE", uuid, url, server_uuid)
+		print ("ADD_FILE", uuid, url, server_uuid), to_hash
 		test_hash = hashlib.sha256(to_hash).hexdigest()
 		if sign_key_clientserver!=test_hash:
 			return HttpResponse('{"successful": false, "error": "signature invalid"}')
@@ -26,6 +47,8 @@ def add_file(request):
 		return HttpResponse('{"successful": true}')
 	return HttpResponse('{"successful": false, "error": "wrong request method"}')
 
+@csrf_exempt
+@print_traceback
 def alias(request):
 	server_uuid=get_setting("server_uuid")
 	if request.method == "POST":
@@ -45,6 +68,8 @@ def alias(request):
 			return HttpResponse('{"successful": false, "error": "file with that uuid not found"}')
 	return HttpResponse('{"successful": false, "error": "wrong request method"}')
 
+@csrf_exempt
+@print_traceback
 def delete(request):
 	server_uuid=get_setting("server_uuid")
 	if request.method == "POST":
