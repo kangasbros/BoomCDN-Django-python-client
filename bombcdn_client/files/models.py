@@ -20,16 +20,16 @@ class Setting(models.Model):
 
 def get_setting(key):
 	try:
-		s=Settings.objects.get(key=key)
-	except Settings.DoesNotExist:
+		s=Setting.objects.get(key=key)
+	except Setting.DoesNotExist:
 		return None
 	return s.value
 
 def set_setting(key, value):
 	try:
-		s=Settings.objects.get(key=key)
-	except Settings.DoesNotExist:
-		s=Settings.objects.create(key=key, value=value)
+		s=Setting.objects.get(key=key)
+	except Setting.DoesNotExist:
+		s=Setting.objects.create(key=key, value=value)
 		s.save()
 		return True
 	s.value=value

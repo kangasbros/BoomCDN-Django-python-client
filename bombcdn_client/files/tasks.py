@@ -3,7 +3,7 @@ import urllib
 import re
 import os
 import random
-from utils import create_file_directories, hashfile
+from utils import create_file_directories, hashfile, b58encode
 from models import File
 from settings import DEBUG
 from models import get_setting, set_setting
