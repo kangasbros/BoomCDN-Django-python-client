@@ -1,0 +1,6 @@
+django
+south
+django-concurrent-server
+Celery
+django-celery
+
