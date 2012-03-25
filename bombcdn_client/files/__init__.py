@@ -37,6 +37,9 @@ def initialize_db(sender, **kwargs):
     to_hash = '%s%s%s%s%s%s' % (data["username"], data["ip_address"], data["port"], data["test_file_uuid"],\
         data["test_file_hash"], profile_uuid)
     test_hash = hashlib.sha256(to_hash).hexdigest()
+    print data
+    print to_hash
+    print test_hash
     data['sign_key_profile'] = test_hash
     results=call_api("/clientserver/new", urllib.urlencode(data))
     print "new server registered", results
