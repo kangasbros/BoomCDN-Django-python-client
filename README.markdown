@@ -9,7 +9,7 @@ Install redis:
 
 on recent linux:
 
-	sudo aptitude install redis-server
+	sudo aptitude install redis-server python-virtualenv
 
 or:
 
