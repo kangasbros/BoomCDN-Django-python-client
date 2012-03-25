@@ -9,7 +9,7 @@ Install redis:
 
 on recent linux:
 
-	sudo aptitude install redis-server
+	sudo aptitude install redis-server python-virtualenv
 
 or:
 
@@ -46,7 +46,7 @@ then start celeryd
 
 and then start the actual server
 
-	python manage.py runserver 0.0.0.0:12313
+	python manage.py runcserver 0.0.0.0:12313
 
 And now you are done! The client will start replicating files and you will start earning money!
 

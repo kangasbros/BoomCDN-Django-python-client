@@ -118,6 +118,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'concurrent_server',
     'djcelery',
     'files',
     # Uncomment the next line to enable the admin:
