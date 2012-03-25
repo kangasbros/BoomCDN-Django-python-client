@@ -1,5 +1,10 @@
 # Installation
 
+First clone the repo
+
+	git clone git://github.com/kangasbros/BoomCDN-Django-python-client.git
+	cd BoomCDN-Django-python-client/bombcdn_client/
+
 Install redis:
 
 on recent linux:
